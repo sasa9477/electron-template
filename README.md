@@ -27,4 +27,4 @@ yarn check-asar
 ```
 
 electron パッケージに含まれるリソースファイル `dist/win-unpacked/resources/app.asar` を解凍します。  
-不要なファイルがある場合は、`electron-builder.yaml` に追加してください。
+不要なファイルがある場合は、`electron-builder.yaml` の `files`に `glob`パターンで追記してください。
