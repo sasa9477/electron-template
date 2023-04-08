@@ -1,0 +1,33 @@
+{
+  "rules": {
+    "react/jsx-curly-brace-presence": [
+      "error",
+      { "props": "always", "children": "ignore", "propElementValues": "always" }
+    ],
+    "react/jsx-pascal-case": "error",
+    "react/self-closing-comp": "error",
+    "react/jsx-boolean-value": "error",
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "parent", "sibling", "index", "object", "type"],
+        "pathGroups": [
+          {
+            "pattern": "{react,react-dom/**,react-router-dom}",
+            "group": "builtin",
+            "position": "before"
+          },
+          {
+            "pattern": "@src/**",
+            "group": "parent",
+            "position": "before"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["builtin"],
+        "alphabetize": {
+          "order": "asc"
+        }
+      }
+    ]
+  }
+}

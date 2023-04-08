@@ -1,0 +1,9 @@
+appId: app.electron-template
+productName: electron-template
+copyright: Copyright © year ${author}
+files:
+  - '!**/.vscode/*'
+  - '!src/renderer/*'
+  - '!vite.config.js'
+  - '!{.eslintignore,.eslintrc.json,.prettierignore,.prettierrc.{json,yaml}}'
+  - '!{.editorconfig,.node-version,README.md}'
