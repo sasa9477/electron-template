@@ -7,8 +7,8 @@ type UserConfig = {}
  * ContextBridgeで通信する mainとrendererの API
  */
 type ElectronAPI = {
-  onLoadSetting: (callback: (config: UserConfig) => void) => void
-  saveSetting: (config: UserConfig) => void
+  onLoadConfig: (callback: (config: UserConfig) => void) => () => void
+  saveConfig: (config: UserConfig) => void
 }
 
 type Channel = keyof ElectronAPI
@@ -16,8 +16,6 @@ type Channel = keyof ElectronAPI
 /**
  * windowに APIを追加
  */
-declare global {
-  interface Window {
-    electronAPI: ElectronAPI
-  }
+interface Window {
+  electronAPI: ElectronAPI
 }

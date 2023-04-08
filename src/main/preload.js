@@ -3,46 +3,42 @@
 'use strict'
 const { contextBridge, ipcRenderer } = require('electron')
 
-contextBridge.exposeInMainWorld('electronAPI', {
-  /**
-   * @param {Channel} channel
-   * @param {any} args
-   */
-  invoke(channel, args) {
-    ipcRenderer.invoke(channel, args)
-  },
+/** @type {ElectronAPI} */
+const electronApiHandler = {
+  onLoadConfig: (callback) => on('onLoadConfig', callback),
+  saveConfig: (config) => invoke('saveConfig', config),
+}
 
-  /**
-   * @param {Channel} channel
-   * @param {(...args: any[]) => void} callback
-   */
-  on(channel, callback) {
-    /**
-     * @type {(event: import('electron').IpcRendererEvent, ...args: any[]) => void}
-     * */
-    const listener = (_event, ...args) => callback(...args)
-    ipcRenderer.on(channel, listener)
+contextBridge.exposeInMainWorld('electronAPI', electronApiHandler)
 
-    return () => {
-      ipcRenderer.removeListener(channel, listener)
-    }
-  },
-  /**
-   * @param {Channel} channel
-   * @param {(...args: any[]) => void} callback
-   */
-  once(channel, callback) {
-    ipcRenderer.once(channel, (_event, ...args) => callback(...args))
-  },
-})
+/**
+ * @param {Channel} channel
+ * @param {any} args
+ */
+function invoke(channel, args) {
+  ipcRenderer.invoke(channel, args)
+}
 
-window.addEventListener('DOMContentLoaded', () => {
-  const replaceText = (/** @type {string} */ selector, /** @type {string | undefined} */ text) => {
-    const element = document.getElementById(selector)
-    if (element) element.innerText = text ?? ''
+/**
+ * @param {Channel} channel
+ * @param {(...args: any[]) => void} callback
+ */
+function on(channel, callback) {
+  /**
+   * @type {(event: import('electron').IpcRendererEvent, ...args: any[]) => void}
+   * */
+  const listener = (_event, ...args) => callback(...args)
+  ipcRenderer.on(channel, listener)
+
+  return () => {
+    ipcRenderer.removeListener(channel, listener)
   }
+}
 
-  for (const type of ['chrome', 'node', 'electron']) {
-    replaceText(`${type}-version`, process.versions[type])
-  }
-})
+/**
+ * @param {Channel} channel
+ * @param {(...args: any[]) => void} callback
+ */
+function once(channel, callback) {
+  ipcRenderer.once(channel, (_event, ...args) => callback(...args))
+}

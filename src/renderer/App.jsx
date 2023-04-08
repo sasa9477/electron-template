@@ -1,10 +1,15 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.scss'
 
 function App() {
   const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    console.log(window.electronAPI)
+    window.electronAPI?.onLoadConfig((config) => console.log(config))
+  }, [])
 
   return (
     <div className='App'>

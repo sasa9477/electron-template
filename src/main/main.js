@@ -2,7 +2,7 @@
 /// <reference path="../@types/global.d.ts"/>
 'use strict'
 const path = require('path')
-const { app, BrowserWindow, Tray, Menu } = require('electron')
+const { app, BrowserWindow, Tray, Menu, ipcMain } = require('electron')
 const Store = require('electron-store')
 
 /**
@@ -54,7 +54,7 @@ const createWindow = () => {
    */
   mainWindow.webContents.on('did-finish-load', () => {
     if (mainWindow?.webContents) {
-      mainWindow.webContents.send('onLoadSetting', {})
+      mainWindow.webContents.send('onLoadConfig', {})
     }
   })
 
@@ -77,6 +77,10 @@ const showWindow = () => {
 }
 
 app.whenReady().then(() => {
+  ipcMain.on('saveConfig', (_event, config) => {
+    store.set(config)
+  })
+
   createWindow()
 
   app.on('activate', () => {
