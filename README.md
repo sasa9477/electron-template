@@ -1,10 +1,11 @@
-## Electron 開発用のテンプレート
+## React × Electron 開発のボイラーテンプレート
 
 ### 機能
 
 - Electron
 - React
 - Vite
+- Sass
 
 ### 使い方
 
