@@ -34,7 +34,8 @@ yarn check-asar
 ```
 
 electron パッケージに含まれるリソースファイル `dist/win-unpacked/resources/app.asar` を解凍します。  
-不要なファイルがある場合は、`electron-builder.yaml` の `files`に `glob`パターンで追記してください。
+`win-unpacked`の部分は 環境に合わせて変更してください。  
+不要なファイルがある場合は、`electron-builder.yaml` の `files`に `glob`パターンで追記するか、`asar: false`を追記することで asar を無効化することもできます。
 
 ### 多重起動防止、タスクトレイ常駐型のアプリ
 
