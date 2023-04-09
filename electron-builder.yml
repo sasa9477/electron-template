@@ -1,6 +1,7 @@
 appId: app.electron-template
 productName: electron-template
 copyright: Copyright © year ${author}
+electronVersion: 24.0.0
 files:
   - '!**/.vscode/*'
   - '!src/renderer/*'
